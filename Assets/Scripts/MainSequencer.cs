@@ -33,11 +33,11 @@ public class MainSequencer : MonoBehaviour
     float bassPitch = 0.125f;
     bool[] activeInstruments = new bool[3];
     float[] cMajorScaleScaled;
-    float reverbAmount = 0.8f;
+    float reverbAmount = 0.5f;
     int reverbOutput = 100;
-    int reverbLiveliness = 90;
+    int reverbLiveliness = 50;
     int reverbCrossoverFreq = 3000;
-    int reverbHighFreqDamping = 30;
+    int reverbHighFreqDamping = 40;
     bool whoosh1Trig = false;
     
     void Start()
