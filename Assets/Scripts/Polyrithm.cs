@@ -12,9 +12,9 @@ public class Polyrhythm : MonoBehaviour
     int beatLengthMs;
     // Create a list of lists to store the play times for each note
     List<List<float>> playTimes = new List<List<float>>();
-    float reverbAmount = 1f;
+    float reverbAmount = 0.5f;
     int reverbOutput = 100;
-    int reverbLiveliness = 90;
+    int reverbLiveliness = 80;
     int reverbCrossoverFreq = 3000;
     int reverbHighFreqDamping = 20;
     float delayFeedbackAmount = 0.2f;
