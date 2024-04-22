@@ -1,0 +1,17 @@
+#N canvas 130 130 964 881 12;
+#X obj 26 6 inlet~;
+#X obj 212 9 inlet~;
+#X text 266 9 fold amount;
+#X obj 27 58 *~;
+#X obj 212 33 clip~ 0 10;
+#X obj 25 217 outlet~;
+#X obj 29 107 expr~ if($v1 > 1 \, 2 - $v1 \, if($v1 < -1 \, -2 - $v1 \, $v1));
+#X obj 25 146 expr~ if($v1 > 1 \, 2 - $v1 \, if($v1 < -1 \, -2 - $v1 \, $v1));
+#X obj 25 193 expr~ if($v1 > 1 \, 2 - $v1 \, if($v1 < -1 \, -2 - $v1 \, $v1));
+#X connect 0 0 3 0;
+#X connect 1 0 4 0;
+#X connect 3 0 6 0;
+#X connect 4 0 3 1;
+#X connect 6 0 7 0;
+#X connect 7 0 8 0;
+#X connect 8 0 5 0;

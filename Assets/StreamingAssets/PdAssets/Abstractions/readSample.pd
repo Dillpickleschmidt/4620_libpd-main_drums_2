@@ -1,0 +1,12 @@
+#N canvas 632 304 1313 737 12;
+#X declare -path Abstractions;
+#X obj 72 61 inlet;
+#X obj 105 100 message2symbol;
+#X obj 220 55 declare -path Abstractions;
+#X obj 106 170 message2symbol;
+#X msg 105 128 ../../../Comp2AudioAssets/DefaultPad_XShortLength_E_Scale/\$1.wav;
+#X obj 106 310 outlet;
+#X connect 0 0 1 0;
+#X connect 1 0 4 0;
+#X connect 3 0 5 0;
+#X connect 4 0 3 0;
