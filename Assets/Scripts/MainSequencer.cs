@@ -31,6 +31,8 @@ public class MainSequencer : MonoBehaviour
     int previousSection = 0;
     float previousSectionLastMeasure; // last measure of the previous section
     float bassPitch = 0.125f;
+    [SerializeField]
+    float bassVolume = 1.3f;
     bool[] activeInstruments = new bool[3];
     float[] cMajorScaleScaled;
     float reverbAmount = 0.5f;
@@ -66,6 +68,7 @@ public class MainSequencer : MonoBehaviour
         pdPatch.SendFloat("reverb_liveliness", reverbLiveliness);
         pdPatch.SendFloat("reverb_crossover_freq", reverbCrossoverFreq);
         pdPatch.SendFloat("reverb_high_freq_damping", reverbHighFreqDamping);
+        // pdPatch.SendFloat("bass_volume", bassVolume);
     }
 
     IEnumerator SendMidi(int count, bool[] activeInstruments)

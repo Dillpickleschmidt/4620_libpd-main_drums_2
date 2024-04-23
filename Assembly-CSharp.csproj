@@ -68,9 +68,12 @@
     <Compile Include="Assets\Scripts\Polyrithm_Backup.cs" />
     <Compile Include="Assets\Scripts\DrumSequencer.cs" />
     <Compile Include="Assets\Scripts\LibPdInstance.cs" />
+    <Compile Include="Assets\Scripts\SongTimerV2.cs" />
     <Compile Include="Assets\Scripts\SongTimer.cs" />
+    <Compile Include="Assets\Scripts\Rotation_Polyrhythm.cs" />
     <Compile Include="Assets\Scripts\Sequencer.cs" />
     <Compile Include="Assets\Scripts\Polyrithm.cs" />
+    <Compile Include="Assets\Scripts\MainSequencerV2.cs" />
     <Compile Include="Assets\Scripts\SoundObject.cs" />
     <Compile Include="Assets\Scripts\EnvelopeFollower.cs" />
     <Compile Include="Assets\Scripts\MainSequencer.cs" />
