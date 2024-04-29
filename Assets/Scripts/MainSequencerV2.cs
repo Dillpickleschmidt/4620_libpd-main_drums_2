@@ -11,8 +11,8 @@ public class MainSequencerV2 : MonoBehaviour
     // Sequencer settings
     [SerializeField] float bassVolume = 1f;
     [SerializeField] float kickVolume = 0.7f;
-    [SerializeField] float hihat1Volume = 0.7f;
-    [SerializeField] float hihat2Volume = 0.7f;
+    [SerializeField] float hihat1Volume = 0.5f;
+    [SerializeField] float hihat2Volume = 0.5f;
     [SerializeField] bool[] sectionsKick = new bool[16];
     [SerializeField] bool[] sectionsHihat1 = new bool[16];
     [SerializeField] bool[] sectionsHihat2 = new bool[16];
@@ -135,19 +135,19 @@ public class MainSequencerV2 : MonoBehaviour
                         pdPatch.SendBang("bang_" + instruments[i].name);
                         Debug.Log("Bang " + instruments[i].name + " at index " + nextPatternIndex);
                     }
+                    // Specific logic for instruments like bass that may require pitch changes
+                    if (instruments[i].name == "bass" && nextPatternIndex != patternIndex) {
+                        int pitchIndex = patternIndex; // Use the current patternIndex for bass pitch
+                        pdPatch.SendFloat("bass_pitch", cMajorScaleScaled[instruments[i].pitch[pitchIndex]]);
+                    }
+
+                    // Update the ramp time
+                    instruments[i].rampMs += SongTimerV2.timeFromLastFrame;
+                    if (instruments[i].rampMs >= instrumentMeasureMs) {
+                        instruments[i].rampMs -= instrumentMeasureMs;
+                    }
                 }
 
-                // Specific logic for instruments like bass that may require pitch changes
-                if (instruments[i].name == "bass" && nextPatternIndex != patternIndex) {
-                    int pitchIndex = patternIndex; // Use the current patternIndex for bass pitch
-                    pdPatch.SendFloat("bass_pitch", cMajorScaleScaled[instruments[i].pitch[pitchIndex]]);
-                }
-
-                // Update the ramp time
-                instruments[i].rampMs += SongTimerV2.timeFromLastFrame;
-                if (instruments[i].rampMs >= instrumentMeasureMs) {
-                    instruments[i].rampMs -= instrumentMeasureMs;
-                }
             }
         }
     }
