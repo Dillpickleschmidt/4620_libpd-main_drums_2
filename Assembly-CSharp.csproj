@@ -64,22 +64,15 @@
     <Analyzer Include="C:\Program Files\Unity\Hub\Editor\2022.3.18f1\Editor\Data\Tools\Unity.SourceGenerators\Unity.Properties.SourceGenerator.dll" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\Scripts\SequencerDrum.cs" />
-    <Compile Include="Assets\Scripts\Polyrithm_Backup.cs" />
-    <Compile Include="Assets\Scripts\DrumSequencer.cs" />
     <Compile Include="Assets\Scripts\LibPdInstance.cs" />
     <Compile Include="Assets\Scripts\SongTimerV2.cs" />
-    <Compile Include="Assets\Scripts\SongTimer.cs" />
     <Compile Include="Assets\Scripts\Rotation_Polyrhythm.cs" />
-    <Compile Include="Assets\Scripts\Sequencer.cs" />
     <Compile Include="Assets\Scripts\Polyrithm.cs" />
     <Compile Include="Assets\Scripts\MainSequencerV2.cs" />
+    <Compile Include="Assets\Scripts\CameraMover.cs" />
     <Compile Include="Assets\Scripts\SoundObject.cs" />
-    <Compile Include="Assets\Scripts\EnvelopeFollower.cs" />
-    <Compile Include="Assets\Scripts\MainSequencer.cs" />
     <Compile Include="Assets\Scripts\SoundControl\ControlFunctions.cs" />
-    <Compile Include="Assets\Scripts\My_DrumSequencer.cs" />
-    <Compile Include="Assets\Scripts\MainLoop.cs" />
+    <Compile Include="Assets\Scripts\BoxArray.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\StreamingAssets\PdAssets\put your PD patches here.txt" />

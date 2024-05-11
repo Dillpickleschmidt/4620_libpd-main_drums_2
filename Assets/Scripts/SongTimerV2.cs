@@ -13,8 +13,8 @@ public class SongTimerV2 : MonoBehaviour
     int beatLengthMs;
     public List<float> sections;
     float[] sectionsAccumulated;
-    float[] sectionStartTimes;
-    float[] sectionEndTimes;
+    public float[] sectionStartTimes;
+    public float[] sectionEndTimes;
     public float measureRampMs;
     public int measureLengthMs;
 

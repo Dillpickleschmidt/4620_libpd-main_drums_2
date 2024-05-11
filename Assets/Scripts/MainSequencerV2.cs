@@ -7,6 +7,13 @@ public class MainSequencerV2 : MonoBehaviour
 {
     public LibPdInstance pdPatch;
     public SongTimerV2 SongTimerV2;
+    public GameObject objectTemplate; // Object to change material settings
+    Material material;
+    Color originalColor;
+    Color newColor;
+    float colorChangeDuration = 0.225f;
+    float colorChangeTimer = 0f;
+    bool kicked = false;
 
     // Sequencer settings
     [SerializeField] float bassVolume = 1f;
@@ -30,11 +37,20 @@ public class MainSequencerV2 : MonoBehaviour
     float[] cMajorScaleScaled;
 
     // Reverb settings
+    float originalReverbAmount = 0.7f;
+
     float reverbAmount = 0.7f;
     int reverbOutput = 100;
     int reverbLiveliness = 60;
     int reverbCrossoverFreq = 3000;
     int reverbHighFreqDamping = 40;
+
+    // Local ramp variables
+    float timeDifference1;
+    bool started1 = false;
+    float startTime1;
+
+    bool swellTrigger;
 
     // Create instrument object containing all instrument settings
     public class Instrument
@@ -63,6 +79,9 @@ public class MainSequencerV2 : MonoBehaviour
             // Then divide by 8 to scale to 0-0.125
             // Then add 0.125 to make E (the root note) equal to 0.125
             cMajorScaleScaled[i] = ((cMajorScaleMidi[i] - 60f) / 12.0f / 8.0f) + 0.125f;
+            material = objectTemplate.GetComponent<Renderer>().material;
+            originalColor = material.GetColor("_EmissionColor");
+            newColor = originalColor * 1.5f;
         }
 
         // Initialize instrument objects
@@ -130,27 +149,69 @@ public class MainSequencerV2 : MonoBehaviour
                 int nextPatternIndex = Mathf.FloorToInt((nextCyclePositionMs / instrumentMeasureMs) * instruments[i].pattern.Length);
 
                 // Check active section and pattern change
-                if (instruments[i].sections[SongTimerV2.getSection(SongTimerV2.t)]) {
-                    if (nextPatternIndex != patternIndex && instruments[i].pattern[nextPatternIndex]) {
+                if (instruments[i].sections[SongTimerV2.getSection(SongTimerV2.t)])
+                {
+                    if (nextPatternIndex != patternIndex && instruments[i].pattern[nextPatternIndex])
+                    {
                         pdPatch.SendBang("bang_" + instruments[i].name);
                         Debug.Log("Bang " + instruments[i].name + " at index " + nextPatternIndex);
+                        if (instruments[i].name == "kick")
+                        {
+                            // lower the brightness of the objectTemplate's emission for 200 ms
+                            material.SetColor("_EmissionColor", newColor);
+                            kicked = true;
+                            Debug.Log("Magenta");
+                        }
                     }
                     // Specific logic for instruments like bass that may require pitch changes
-                    if (instruments[i].name == "bass" && nextPatternIndex != patternIndex) {
+                    if (instruments[i].name == "bass")
+                    {
                         int pitchIndex = patternIndex; // Use the current patternIndex for bass pitch
                         pdPatch.SendFloat("bass_pitch", cMajorScaleScaled[instruments[i].pitch[pitchIndex]]);
                     }
 
                     // Update the ramp time
                     instruments[i].rampMs += SongTimerV2.timeFromLastFrame;
-                    if (instruments[i].rampMs >= instrumentMeasureMs) {
+                    if (instruments[i].rampMs >= instrumentMeasureMs)
+                    {
                         instruments[i].rampMs -= instrumentMeasureMs;
                     }
                 }
-
+            }
+            if (kicked) {
+                colorChangeTimer += Time.deltaTime;
+                if (colorChangeTimer > colorChangeDuration) {
+                    material.SetColor("_EmissionColor", originalColor);
+                    kicked = false;
+                    colorChangeTimer = 0f;
+                    Debug.Log("Yellow");
+                }
+            }
+            // send 'bang_swell' message to Pure Data patch 3 sec before the end of section 4
+            if (SongTimerV2.t >= SongTimerV2.sectionStartTimes[4] - 3800)
+            {
+                if (!swellTrigger)
+                {
+                    swellTrigger = true;
+                    pdPatch.SendBang("bang_swell");
+                    Debug.Log("SWELL SENT");
+                }
             }
         }
     }
-
-
+    float TimeRamp(float currentTime, float allowedTimeLength, ref bool started, ref float startTime, ref float timeDifference) {
+        if (started == false)
+        {
+            startTime = currentTime;
+            started = true;
+        }
+        timeDifference = currentTime - startTime;
+        if (timeDifference > allowedTimeLength)
+        {
+            // clamp the timeDifference to the allowedTimeLength
+            timeDifference = allowedTimeLength;
+        }
+        Debug.Log("timeDifference: " + timeDifference);
+        return timeDifference;
+    }
 }
