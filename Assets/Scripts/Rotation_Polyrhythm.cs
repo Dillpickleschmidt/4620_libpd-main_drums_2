@@ -50,8 +50,8 @@ public class Rotation_Polyrhythm : MonoBehaviour
         if (SongTimerV2.started) {
             for (int i = 0; i < objects.Length; i++)
             {
-                // Increment current angle based on rotation speed
-                currentAngles[i] += rotationSpeeds[i] * Time.deltaTime;
+                // Increment current angle based on rotation speed and wrap it using modulo 360
+                currentAngles[i] = (currentAngles[i] + rotationSpeeds[i] * Time.deltaTime) % 360f;
 
                 // Calculate new position using circular motion logic
                 float radius = 1.05f * i; // Set radius as function of index to spread out objects
@@ -61,22 +61,21 @@ public class Rotation_Polyrhythm : MonoBehaviour
                 // Update the position of the object
                 objects[i].transform.localPosition = new Vector3(x, CameraMover.cameraYPosition-CameraMover.cameraInitialYPosition, z);
             }
-
             // // Update camera rotation and position
-            // if (objects.Length > 0) {
-            //     float lastObjectSpeed = rotationSpeeds[objects.Length - 1]; // Speed of the last object
-            //     cameraCurrentAngle1 += lastObjectSpeed * Time.deltaTime; // Rotate at the same speed as the last object
+                // if (objects.Length > 0) {
+                //     float lastObjectSpeed = rotationSpeeds[objects.Length - 1]; // Speed of the last object
+                //     cameraCurrentAngle1 += lastObjectSpeed * Time.deltaTime; // Rotate at the same speed as the last object
 
-            //     float cameraX1 = cameraRadius1 * Mathf.Cos(cameraCurrentAngle1 * Mathf.Deg2Rad * cameraSpeed1);
-            //     float cameraZ1 = cameraPositionOffset1.z + cameraRadius1 * Mathf.Sin(cameraCurrentAngle1 * Mathf.Deg2Rad * cameraSpeed1);
-            //     cameraX1 += cameraPositionOffset1.x * Mathf.Cos(cameraCurrentAngle1 * Mathf.Deg2Rad * cameraSpeed1);
-            //     cameraZ1 += cameraPositionOffset1.z * Mathf.Cos(cameraCurrentAngle1 * Mathf.Deg2Rad * cameraSpeed1);
+                //     float cameraX1 = cameraRadius1 * Mathf.Cos(cameraCurrentAngle1 * Mathf.Deg2Rad * cameraSpeed1);
+                //     float cameraZ1 = cameraPositionOffset1.z + cameraRadius1 * Mathf.Sin(cameraCurrentAngle1 * Mathf.Deg2Rad * cameraSpeed1);
+                //     cameraX1 += cameraPositionOffset1.x * Mathf.Cos(cameraCurrentAngle1 * Mathf.Deg2Rad * cameraSpeed1);
+                //     cameraZ1 += cameraPositionOffset1.z * Mathf.Cos(cameraCurrentAngle1 * Mathf.Deg2Rad * cameraSpeed1);
 
-            //     // Update the position of the camera
-            //     cameraObject1.transform.position = new Vector3(cameraX1, cameraPositionOffset1.y, cameraZ1);
-            //     cameraObject1.transform.LookAt(rotationCenter.transform); // Ensure the camera always points towards the center
-            //     cameraObject1.transform.Rotate(cameraRotationOffset1); // Apply rotation offset
-            // }
+                //     // Update the position of the camera
+                //     cameraObject1.transform.position = new Vector3(cameraX1, cameraPositionOffset1.y, cameraZ1);
+                //     cameraObject1.transform.LookAt(rotationCenter.transform); // Ensure the camera always points towards the center
+                //     cameraObject1.transform.Rotate(cameraRotationOffset1); // Apply rotation offset
+                // }
         }
     }
 

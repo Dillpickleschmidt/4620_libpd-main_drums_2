@@ -81,7 +81,7 @@ public class MainSequencerV2 : MonoBehaviour
             cMajorScaleScaled[i] = ((cMajorScaleMidi[i] - 60f) / 12.0f / 8.0f) + 0.125f;
             material = objectTemplate.GetComponent<Renderer>().material;
             originalColor = material.GetColor("_EmissionColor");
-            newColor = originalColor * 1.5f;
+            newColor = originalColor * 2f;
         }
 
         // Initialize instrument objects
@@ -160,7 +160,7 @@ public class MainSequencerV2 : MonoBehaviour
                             // lower the brightness of the objectTemplate's emission for 200 ms
                             material.SetColor("_EmissionColor", newColor);
                             kicked = true;
-                            Debug.Log("Magenta");
+                            // Debug.Log("Magenta");
                         }
                     }
                     // Specific logic for instruments like bass that may require pitch changes
@@ -184,7 +184,7 @@ public class MainSequencerV2 : MonoBehaviour
                     material.SetColor("_EmissionColor", originalColor);
                     kicked = false;
                     colorChangeTimer = 0f;
-                    Debug.Log("Yellow");
+                    // Debug.Log("Yellow");
                 }
             }
             // send 'bang_swell' message to Pure Data patch 3 sec before the end of section 4
